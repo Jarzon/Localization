@@ -1,0 +1,16 @@
+{
+  "name": "jarzon/localization",
+  "type": "project",
+  "autoload": {
+    "psr-4": {"Jarzon\\": "src/"}
+  },
+  "autoload-dev": {
+    "psr-4": {"Tests\\": "tests/"}
+  },
+  "require": {
+  },
+  "require-dev": {
+    "jarzon/prim": "^0.12.0",
+    "phpunit/phpunit": "6.2.*"
+  }
+}
