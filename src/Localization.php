@@ -26,8 +26,8 @@ class Localization
         $this->fetchTranslation();
         $this->setMessagesLanguage();
 
-        $this->view->registerFunction('_', function(string $message) {
-            return $this->translate($message);
+        $this->view->registerFunction('_', function(string $message, ...$args) {
+            return $this->translate($message, $args);
         });
 
         $this->view->registerFunction('currencyFormat', function(string $message) {
@@ -35,16 +35,24 @@ class Localization
         });
     }
 
-    function translate(string $message) : string
+    function translate(string $message, $args = []) : string
     {
-        $message = (isset($this->messages[$message]))? $this->messages[$message][self::$messagesLanguage]: $message;
+        $message = $this->getTranslation($message);
 
         if(!empty($args)) {
-            $args = (isset($this->messages[$args]))? $this->messages[$args][self::$messagesLanguage]: $args;
-            $message = sprintf($message, $args);
+
+            array_walk($args, function(&$msg, $key) {
+                $msg = $this->getTranslation($msg);
+            });
+
+            $message = sprintf($message, ...$args);
         }
 
         return $message;
+    }
+
+    function getTranslation(string $msg) {
+        return (isset($this->messages[$msg]))? $this->messages[$msg][self::$messagesLanguage]: $msg;
     }
 
     function currency(float $price) : string
