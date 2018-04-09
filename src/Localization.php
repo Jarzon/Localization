@@ -37,7 +37,14 @@ class Localization
 
     function translate(string $message) : string
     {
-        return (isset($this->messages[$message]))? $this->messages[$message][self::$messagesLanguage]: $message;
+        $message = (isset($this->messages[$message]))? $this->messages[$message][self::$messagesLanguage]: $message;
+
+        if(!empty($args)) {
+            $args = (isset($this->messages[$args]))? $this->messages[$args][self::$messagesLanguage]: $args;
+            $message = sprintf($message, $args);
+        }
+
+        return $message;
     }
 
     function currency(float $price) : string
