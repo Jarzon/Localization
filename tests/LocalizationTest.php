@@ -10,29 +10,37 @@ class LocalizationTest extends TestCase
 {
     public function testGetLanguage()
     {
-        $view = new Localization();
+        $local = new Localization();
 
-        $view->setMessagesLanguage();
+        $local->setMessagesLanguage();
 
-        $this->assertEquals('en', $view->getLanguage());
+        $this->assertEquals('en', $local->getLanguage());
 
-        return $view;
+        return $local;
     }
 
     /**
      * @depends testGetLanguage
      */
-    public function testTranslate($view)
+    public function testTranslate(Localization $local)
     {
-        $this->assertEquals('Translated test', $view->translate('test'));
+        $this->assertEquals('Translated test', $local->translate('test'));
     }
 
     /**
      * @depends testGetLanguage
      */
-    public function testSetLanguage($view)
+    public function testSetLanguage(Localization $local)
     {
-        $view->setLanguage('fr');
-        $this->assertEquals('Test traduit', $view->translate('test'));
+        $local->setLanguage('fr');
+        $this->assertEquals('Test traduit', $local->translate('test'));
+    }
+
+    /**
+     * @depends testGetLanguage
+     */
+    public function testGetClientLanguage(Localization $local)
+    {
+        $this->assertEquals('fr', $local->getClientLanguage());
     }
 }

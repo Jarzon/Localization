@@ -11,6 +11,7 @@ class Localization
 
     protected $options = [];
 
+    /** @var $view \Prim\View; */
     public function __construct($view, array $options = [])
     {
         $this->view = $view;
@@ -85,5 +86,16 @@ class Localization
             // TODO: Cache the file
             $this->messages = json_decode(file_get_contents($file), true);
         }
+    }
+
+    function getClientLanguage() {
+        $lang = $this->language;
+
+        if(isset($_SERVER['HTTP_ACCEPT_LANGUAGE'])) {
+            $lang = \Locale::acceptFromHttp($_SERVER['HTTP_ACCEPT_LANGUAGE']);
+            $lang = substr($lang, 0, 2);
+        }
+
+        return $lang;
     }
 }
