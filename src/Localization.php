@@ -36,7 +36,7 @@ class Localization
         });
     }
 
-    function translate(string $message, $args = []) : string
+    function translate(string $message, $args = []): string
     {
         $message = $this->getTranslation($message);
 
@@ -52,16 +52,17 @@ class Localization
         return $message;
     }
 
-    function getTranslation(string $msg) {
+    function getTranslation(string $msg)
+    {
         return (isset($this->messages[$msg]))? $this->messages[$msg][self::$messagesLanguage]: $msg;
     }
 
-    function currency(float $price) : string
+    function currency(float $price): string
     {
         return number_format($price, 2, ',', ' ') . ' $';
     }
 
-    function getLanguage() : string
+    function getLanguage(): string
     {
         return $this->language;
     }
