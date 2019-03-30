@@ -1,7 +1,7 @@
 <?php
 namespace Jarzon\Container;
 
-trait Localization {
+trait LocalizationProviderTrait {
     /**
      * @return \Jarzon\Localization
      */
