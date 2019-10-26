@@ -8,7 +8,8 @@
     "psr-4": {"Tests\\": "tests/"}
   },
   "require": {
-    "ext-json": "*"
+    "ext-json": "*",
+    "ext-intl": "*"
   },
   "require-dev": {
     "jarzon/prim": "^0.12.0",

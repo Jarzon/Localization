@@ -89,8 +89,8 @@ class Localization
         }
     }
 
-    function getClientLanguage() {
-        $lang = $this->language;
+    function getClientLanguage($lang = null) {
+        $lang = $lang ?? $this->language;
 
         if(isset($_SERVER['HTTP_ACCEPT_LANGUAGE'])) {
             $lang = \Locale::acceptFromHttp($_SERVER['HTTP_ACCEPT_LANGUAGE']);
