@@ -80,12 +80,35 @@ class Localization
 
     function fetchTranslation()
     {
-        $file = "{$this->options['root']}app/config/messages.json";
+        $appDir = "{$this->options['root']}app";
 
-        // Check if we have a translation file for that language
-        if (file_exists($file)) {
-            // TODO: Cache the file
-            $this->messages = json_decode(file_get_contents($file), true);
+        $cache = "$appDir/cache/messages.cache";
+
+        if($this->options['env'] !== 'dev' && file_exists($cache)) {
+            $this->messages = include($cache);
+        }
+        else {
+            $file = "$appDir/config/messages.json";
+
+            if (file_exists($file)) {
+                $this->messages = json_decode(file_get_contents($file), true);
+
+                if($this->options['env'] !== 'dev') {
+                    $content = '';
+
+                    foreach ($this->messages as $index => $array) {
+                        $messages = [];
+                        foreach ($array as $message) {
+                            $messages[] = "'".str_replace("'", "\'", $message)."'";
+                        }
+
+                        $content .= "'".str_replace("'", "\'", $index)."' => [" . implode(',', $messages) . "],";
+                    }
+
+
+                    file_put_contents($cache, "<?php return [$content]; ?>");
+                }
+            }
         }
     }
 
