@@ -1,5 +1,6 @@
 {
   "name": "jarzon/localization",
+  "description": "Localization library",
   "type": "project",
   "autoload": {
     "psr-4": {"Jarzon\\": "src/"}
