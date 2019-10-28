@@ -84,7 +84,7 @@ class Localization
 
         $cache = "$appDir/cache/messages.cache";
 
-        if($this->options['env'] !== 'dev' && file_exists($cache)) {
+        if($this->options['environment'] !== 'dev' && file_exists($cache)) {
             $this->messages = include($cache);
         }
         else {
@@ -93,7 +93,7 @@ class Localization
             if (file_exists($file)) {
                 $this->messages = json_decode(file_get_contents($file), true);
 
-                if($this->options['env'] !== 'dev') {
+                if($this->options['environment'] !== 'dev') {
                     $content = '';
 
                     foreach ($this->messages as $index => $array) {
