@@ -1,18 +1,19 @@
 <?php
 namespace Jarzon;
 
+use Prim\View;
+
 class Localization
 {
-    protected $view;
+    protected View $view;
 
-    public $language = 'en';
-    static public $messagesLanguage = '';
-    public $messages = [];
+    public string $language = 'en';
+    static public string $messagesLanguage = '';
+    public array $messages = [];
 
-    protected $options = [];
+    protected array $options = [];
 
-    /** @var $view \Prim\View; */
-    public function __construct($view, array $options = [])
+    public function __construct(View $view, array $options = [])
     {
         $this->view = $view;
 
@@ -23,7 +24,8 @@ class Localization
         $this->buildLocalization();
     }
 
-    function buildLocalization() {
+    function buildLocalization(): void
+    {
         $this->fetchTranslation();
         $this->setMessagesLanguage();
 
@@ -52,7 +54,7 @@ class Localization
         return $message;
     }
 
-    function getTranslation(string $msg)
+    function getTranslation(string $msg): string
     {
         return (isset($this->messages[$msg]))? $this->messages[$msg][self::$messagesLanguage]: $msg;
     }
@@ -67,18 +69,18 @@ class Localization
         return $this->language;
     }
 
-    function setLanguage(string $language)
+    function setLanguage(string $language): void
     {
         $this->language = $language;
         $this->setMessagesLanguage();
     }
 
-    function setMessagesLanguage()
+    function setMessagesLanguage(): void
     {
         self::$messagesLanguage = array_search($this->language, $this->messages['languages']);
     }
 
-    function fetchTranslation()
+    function fetchTranslation(): void
     {
         $appDir = "{$this->options['root']}app";
 
@@ -112,12 +114,13 @@ class Localization
         }
     }
 
-    function getClientLanguage($lang = null) {
+    public function getClientLanguage($lang = null): string
+    {
         $lang = $lang ?? $this->language;
 
         if(isset($_SERVER['HTTP_ACCEPT_LANGUAGE'])) {
-            $lang = \Locale::acceptFromHttp($_SERVER['HTTP_ACCEPT_LANGUAGE']);
-            $lang = substr($lang, 0, 2);
+            $userLang = \Locale::acceptFromHttp($_SERVER['HTTP_ACCEPT_LANGUAGE']);
+            $lang = \Locale::lookup($this->messages['languages'], $userLang, true, $lang);
         }
 
         return $lang;

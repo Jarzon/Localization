@@ -42,5 +42,17 @@ class LocalizationTest extends TestCase
     public function testGetClientLanguage(Localization $local)
     {
         $this->assertEquals('fr', $local->getClientLanguage());
+
+        $_SERVER['HTTP_ACCEPT_LANGUAGE'] = 'es; jp';
+
+        $this->assertEquals('fr', $local->getClientLanguage('fr'));
+
+        $_SERVER['HTTP_ACCEPT_LANGUAGE'] = 'en; es jp';
+
+        $this->assertEquals('en', $local->getClientLanguage('fr'));
+
+        $_SERVER['HTTP_ACCEPT_LANGUAGE'] = '*';
+
+        $this->assertEquals('fr', $local->getClientLanguage('fr'));
     }
 }
