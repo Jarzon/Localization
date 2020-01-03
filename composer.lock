@@ -4,31 +4,35 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a208bac3be50e00690ea93333f2c3c1e",
+    "content-hash": "963765dff5747e3116d6785754e559c6",
     "packages": [
         {
             "name": "jarzon/prim",
-            "version": "v0.12.23",
+            "version": "v0.16.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Jarzon/Prim.git",
-                "reference": "4ab4d3c9a6e92d92cd9ccf0c824d79de4c8b9147"
+                "reference": "e5798eee874e840ffff52aa9b306bbbe7d051eef"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Jarzon/Prim/zipball/4ab4d3c9a6e92d92cd9ccf0c824d79de4c8b9147",
-                "reference": "4ab4d3c9a6e92d92cd9ccf0c824d79de4c8b9147",
+                "url": "https://api.github.com/repos/Jarzon/Prim/zipball/e5798eee874e840ffff52aa9b306bbbe7d051eef",
+                "reference": "e5798eee874e840ffff52aa9b306bbbe7d051eef",
                 "shasum": ""
             },
             "require": {
                 "ext-pdo": "*",
                 "nikic/fast-route": "1.2.*",
-                "php": ">=7.2.0"
+                "php": ">=7.4.0"
             },
             "require-dev": {
                 "mikey179/vfsstream": "1.6.x",
-                "phpunit/phpunit": "~7.5.0"
+                "phpstan/phpstan": "~0.11.0",
+                "phpunit/phpunit": "~8.4.0"
             },
+            "bin": [
+                "bin/prim"
+            ],
             "type": "project",
             "autoload": {
                 "psr-4": {
@@ -50,7 +54,7 @@
             "keywords": [
                 "framework"
             ],
-            "time": "2019-01-19T08:55:11+00:00"
+            "time": "2019-12-02T02:17:18+00:00"
         },
         {
             "name": "nikic/fast-route",
