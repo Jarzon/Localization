@@ -101,10 +101,10 @@ class Localization
                     foreach ($this->messages as $index => $array) {
                         $messages = [];
                         foreach ($array as $message) {
-                            $messages[] = "'".str_replace("'", "\'", $message)."'";
+                            $messages[] = "'".addslashes($message)."'";
                         }
 
-                        $content .= "'".str_replace("'", "\'", $index)."' => [" . implode(',', $messages) . "],";
+                        $content .= "'".addslashes($index)."' => [" . implode(',', $messages) . "],";
                     }
 
 
