@@ -6,7 +6,8 @@ Class Localization extends \Jarzon\Localization {
     {
         $this->messages = [
             'languages' => ['en', 'fr'],
-            'test' => ['Translated test', 'Test traduit']
+            'test' => ['Translated test', 'Test traduit'],
+            "testing ' \"" => ["testing ' \"", 'teste \' "'],
         ];
 
         $this->setMessagesLanguage();

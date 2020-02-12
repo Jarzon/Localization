@@ -80,7 +80,7 @@ class Localization
         self::$messagesLanguage = array_search($this->language, $this->messages['languages']);
     }
 
-    function fetchTranslation(): void
+    protected function fetchTranslation(): void
     {
         $appDir = "{$this->options['root']}app";
 
@@ -96,22 +96,17 @@ class Localization
                 $this->messages = json_decode(file_get_contents($file), true);
 
                 if($this->options['environment'] !== 'dev') {
-                    $content = '';
+                    $content = $this->generatePHP();
 
-                    foreach ($this->messages as $index => $array) {
-                        $messages = [];
-                        foreach ($array as $message) {
-                            $messages[] = "'".addslashes($message)."'";
-                        }
-
-                        $content .= "'".addslashes($index)."' => [" . implode(',', $messages) . "],";
-                    }
-
-
-                    file_put_contents($cache, "<?php return [$content]; ?>");
+                    file_put_contents($cache, "<?php return $content; ?>");
                 }
             }
         }
+    }
+
+    public function generatePHP(): string
+    {
+        return var_export($this->messages, true);
     }
 
     public function getClientLanguage($lang = null): string

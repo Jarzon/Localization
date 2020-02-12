@@ -55,4 +55,28 @@ class LocalizationTest extends TestCase
 
         $this->assertEquals('fr', $local->getClientLanguage('fr'));
     }
+
+    /**
+     * @depends testGetLanguage
+     */
+    public function testGeneratePHP(Localization $local)
+    {
+        $this->assertEquals("array (
+  'languages' => 
+  array (
+    0 => 'en',
+    1 => 'fr',
+  ),
+  'test' => 
+  array (
+    0 => 'Translated test',
+    1 => 'Test traduit',
+  ),
+  'testing \' \"' => 
+  array (
+    0 => 'testing \' \"',
+    1 => 'teste \' \"',
+  ),
+)", $local->generatePHP());
+    }
 }
