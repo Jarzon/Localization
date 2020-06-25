@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 namespace Jarzon;
 
 use Prim\View;
@@ -7,8 +7,8 @@ class Localization
 {
     protected View $view;
 
-    public string $language = 'en';
-    static public string $messagesLanguage = '';
+    public string $language = 'fr_CA';
+    static public int $messagesLanguage = 0;
     public array $messages = [];
 
     protected array $options = [];
@@ -32,10 +32,6 @@ class Localization
         $this->view->registerFunction('_', function(string $message, ...$args) {
             return $this->translate($message, $args);
         });
-
-        $this->view->registerFunction('currencyFormat', function(string $message) {
-            return $this->currency($message);
-        });
     }
 
     function translate(string $message, $args = []): string
@@ -56,17 +52,12 @@ class Localization
 
     function getTranslation(string $msg): string
     {
-        return (isset($this->messages[$msg]))? $this->messages[$msg][self::$messagesLanguage]: $msg;
-    }
-
-    function currency(float $price): string
-    {
-        return number_format($price, 2, ',', ' ') . ' $';
+        return isset($this->messages[$msg])? ($this->messages[$msg][self::$messagesLanguage] ?? $this->messages[$msg][self::$messagesLanguage -1]): $msg;
     }
 
     function getLanguage(): string
     {
-        return $this->language;
+        return explode('_', $this->language)[0];
     }
 
     function setLanguage(string $language): void
@@ -115,7 +106,7 @@ class Localization
 
         if(isset($_SERVER['HTTP_ACCEPT_LANGUAGE'])) {
             $userLang = \Locale::acceptFromHttp($_SERVER['HTTP_ACCEPT_LANGUAGE']);
-            $lang = \Locale::lookup($this->messages['languages'], $userLang, true, $lang);
+            $lang = \Locale::lookup($this->messages['languages'], $userLang? $userLang: 'fr_CA', true, $lang);
         }
 
         return $lang;
