@@ -14,7 +14,7 @@ class LocalizationTest extends TestCase
 
         $local->setMessagesLanguage();
 
-        $this->assertEquals('en', $local->getLanguage());
+        $this->assertEquals('fr', $local->getLanguage());
 
         return $local;
     }
@@ -24,6 +24,7 @@ class LocalizationTest extends TestCase
      */
     public function testTranslate(Localization $local)
     {
+        $local->setLanguage('en_CA');
         $this->assertEquals('Translated test', $local->translate('test'));
     }
 
@@ -32,7 +33,7 @@ class LocalizationTest extends TestCase
      */
     public function testSetLanguage(Localization $local)
     {
-        $local->setLanguage('fr');
+        $local->setLanguage('fr_CA');
         $this->assertEquals('Test traduit', $local->translate('test'));
     }
 
@@ -41,19 +42,19 @@ class LocalizationTest extends TestCase
      */
     public function testGetClientLanguage(Localization $local)
     {
-        $this->assertEquals('fr', $local->getClientLanguage());
+        $this->assertEquals('fr_CA', $local->getClientLanguage());
 
         $_SERVER['HTTP_ACCEPT_LANGUAGE'] = 'es; jp';
 
-        $this->assertEquals('fr', $local->getClientLanguage('fr'));
+        $this->assertEquals('en_CA', $local->getClientLanguage('en_CA'));
 
         $_SERVER['HTTP_ACCEPT_LANGUAGE'] = 'en; es jp';
 
-        $this->assertEquals('en', $local->getClientLanguage('fr'));
+        $this->assertEquals('fr_CA', $local->getClientLanguage('fr_CA'));
 
         $_SERVER['HTTP_ACCEPT_LANGUAGE'] = '*';
 
-        $this->assertEquals('fr', $local->getClientLanguage('fr'));
+        $this->assertEquals('fr_CA', $local->getClientLanguage('fr_CA'));
     }
 
     /**
@@ -64,8 +65,8 @@ class LocalizationTest extends TestCase
         $this->assertEquals("array (
   'languages' => 
   array (
-    0 => 'en',
-    1 => 'fr',
+    0 => 'en_CA',
+    1 => 'fr_CA',
   ),
   'test' => 
   array (

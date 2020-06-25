@@ -68,7 +68,8 @@ class Localization
 
     function setMessagesLanguage(): void
     {
-        self::$messagesLanguage = array_search($this->language, $this->messages['languages']);
+        $index = array_search($this->language, $this->messages['languages']);
+        self::$messagesLanguage = $index? $index: 0;
     }
 
     protected function fetchTranslation(): void
@@ -106,7 +107,9 @@ class Localization
 
         if(isset($_SERVER['HTTP_ACCEPT_LANGUAGE'])) {
             $userLang = \Locale::acceptFromHttp($_SERVER['HTTP_ACCEPT_LANGUAGE']);
-            $lang = \Locale::lookup($this->messages['languages'], $userLang? $userLang: 'fr_CA', true, $lang);
+            if($userLang) {
+                $lang = \Locale::lookup($this->messages['languages'], $userLang, true, $lang);
+            }
         }
 
         return $lang;
