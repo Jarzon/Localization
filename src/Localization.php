@@ -66,7 +66,7 @@ class Localization
         $this->setMessagesLanguage();
     }
 
-    function setMessagesLanguage(): void
+    protected function setMessagesLanguage(): void
     {
         $index = array_search($this->language, $this->messages['languages']);
         self::$messagesLanguage = $index? $index: 0;
