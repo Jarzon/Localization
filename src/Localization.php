@@ -55,6 +55,12 @@ class Localization
         return isset($this->messages[$msg])? ($this->messages[$msg][self::$messagesLanguage] ?? $this->messages[$msg][self::$messagesLanguage -1]): $msg;
     }
 
+    /** @param Array<mixed> $messages */
+    function extractMessages(array $messages): array
+    {
+        return array_filter($this->messages, fn($key) => in_array($key, $messages), ARRAY_FILTER_USE_KEY);
+    }
+
     function getLanguage(): string
     {
         return explode('_', $this->language)[0];

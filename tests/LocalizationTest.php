@@ -73,4 +73,18 @@ class LocalizationTest extends TestCase
   ),
 )", $local->generatePHP());
     }
+
+    #[Depends('testGetLanguage')]
+    public function testExtractMessages(Localization $local)
+    {
+        $local->messages = [
+            'languages' => ['en', 'fr'],
+            'test' => ['testen', 'testfr'],
+            'test2' => ['test2en', 'test2fr'],
+        ];
+        $this->assertEquals([], $local->extractMessages([]));
+
+        $this->assertEquals(['test' => ['testen', 'testfr']], $local->extractMessages(['test']));
+        $this->assertEquals(['test' => ['testen', 'testfr'], 'test2' => ['test2en', 'test2fr']], $local->extractMessages(['test', 'test2']));
+    }
 }
