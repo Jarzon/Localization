@@ -3,43 +3,38 @@ declare(strict_types=1);
 
 namespace Tests;
 
+use PHPUnit\Framework\Attributes\Depends;
 use PHPUnit\Framework\TestCase;
 use Tests\Mock\Localization;
 
 class LocalizationTest extends TestCase
 {
-    public function testGetLanguage()
+    public function testGetLanguage(): Localization
     {
         $local = new Localization();
 
-        $local->setMessagesLanguage();
+        $local->setLanguage('fr');
 
         $this->assertEquals('fr', $local->getLanguage());
 
         return $local;
     }
 
-    /**
-     * @depends testGetLanguage
-     */
+    #[Depends('testGetLanguage')]
     public function testTranslate(Localization $local)
     {
         $local->setLanguage('en_CA');
         $this->assertEquals('Translated test', $local->translate('test'));
     }
 
-    /**
-     * @depends testGetLanguage
-     */
+    #[Depends('testGetLanguage')]
     public function testSetLanguage(Localization $local)
     {
         $local->setLanguage('fr_CA');
         $this->assertEquals('Test traduit', $local->translate('test'));
     }
 
-    /**
-     * @depends testGetLanguage
-     */
+    #[Depends('testGetLanguage')]
     public function testGetClientLanguage(Localization $local)
     {
         $this->assertEquals('fr_CA', $local->getClientLanguage());
@@ -57,9 +52,7 @@ class LocalizationTest extends TestCase
         $this->assertEquals('fr_CA', $local->getClientLanguage('fr_CA'));
     }
 
-    /**
-     * @depends testGetLanguage
-     */
+    #[Depends('testGetLanguage')]
     public function testGeneratePHP(Localization $local)
     {
         $this->assertEquals("array (
