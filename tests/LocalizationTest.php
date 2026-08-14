@@ -82,9 +82,9 @@ class LocalizationTest extends TestCase
             'test' => ['testen', 'testfr'],
             'test2' => ['test2en', 'test2fr'],
         ];
-        $this->assertEquals([], $local->extractMessages([]));
+        $this->assertEquals([], $local->extractMessages([], 'fr'));
 
-        $this->assertEquals(['test' => ['testen', 'testfr']], $local->extractMessages(['test']));
-        $this->assertEquals(['test' => ['testen', 'testfr'], 'test2' => ['test2en', 'test2fr']], $local->extractMessages(['test', 'test2']));
+        $this->assertEquals(['test' => 'testfr'], $local->extractMessages(['test'],'fr'));
+        $this->assertEquals(['test' => 'testen', 'test2' => 'test2en'], $local->extractMessages(['test', 'test2'],'en'));
     }
 }

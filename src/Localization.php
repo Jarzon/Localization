@@ -32,6 +32,10 @@ class Localization
         $this->view->registerFunction('_', function(string $message, ...$args) {
             return $this->translate($message, $args);
         });
+
+        $this->view->registerFunction('_extractMessages', function(string $messages, string $language) {
+            return $this->extractMessages($messages, $language);
+        });
     }
 
     function translate(string $message, $args = []): string
@@ -56,9 +60,14 @@ class Localization
     }
 
     /** @param Array<mixed> $messages */
-    function extractMessages(array $messages): array
+    function extractMessages(array $messages, string $language): array
     {
-        return array_filter($this->messages, fn($key) => in_array($key, $messages), ARRAY_FILTER_USE_KEY);
+        $langIndex = array_search($language, $this->messages['languages']);
+        $translations = array_filter($this->messages, fn($key) => in_array($key, $messages), ARRAY_FILTER_USE_KEY);
+        foreach ($translations as $i => $t) {
+            $translations[$i] = $t[$langIndex];
+        }
+        return $translations;
     }
 
     function getLanguage(): string
