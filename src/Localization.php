@@ -33,7 +33,7 @@ class Localization
             return $this->translate($message, $args);
         });
 
-        $this->view->registerFunction('_extractMessages', function(string $messages, string $language) {
+        $this->view->registerFunction('_extractMessages', function(array $messages, string $language) {
             return $this->extractMessages($messages, $language);
         });
     }
