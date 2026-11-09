@@ -9,15 +9,15 @@ class Localization
 
     public string $language = 'fr_CA';
     static public int $messagesLanguage = 0;
+    /** @var Array<mixed> $messages */
     public array $messages = [];
 
-    protected array $options = [];
-
-    public function __construct(View $view, array $options = [])
+    /** @param Array<mixed> $options */
+    public function __construct(View $view, protected array $options = [])
     {
         $this->view = $view;
 
-        $this->options = $options += [
+        $this->options += [
             'root' => ''
         ];
 
@@ -44,7 +44,7 @@ class Localization
 
         if(!empty($args)) {
 
-            array_walk($args, function(&$msg, $key) {
+            array_walk($args, function(&$msg) {
                 $msg = $this->getTranslation($msg);
             });
 
@@ -54,12 +54,15 @@ class Localization
         return $message;
     }
 
-    function getTranslation(string $msg): string
+    function getTranslation(string|int $msg): string
     {
         return isset($this->messages[$msg])? ($this->messages[$msg][self::$messagesLanguage] ?? $this->messages[$msg][self::$messagesLanguage -1]): $msg;
     }
 
-    /** @param Array<mixed> $messages */
+    /**
+     * @param Array<mixed> $messages
+     * @return Array<mixed>
+     */
     function extractMessages(array $messages, string $language): array
     {
         $langIndex = array_search($language, $this->messages['languages']);
@@ -116,7 +119,7 @@ class Localization
         return var_export($this->messages, true);
     }
 
-    public function getClientLanguage($lang = null): string
+    public function getClientLanguage(string|null $lang = null): string
     {
         $lang = $lang ?? $this->language;
 

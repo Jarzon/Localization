@@ -15,6 +15,7 @@
     "jarzon/prim": "1.*.*"
   },
   "require-dev": {
+    "phpstan/phpstan": "^2.1.0",
     "phpunit/phpunit": "^13.0.0"
   }
 }
