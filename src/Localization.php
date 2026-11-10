@@ -54,7 +54,7 @@ class Localization
         return $message;
     }
 
-    function getTranslation(string|int $msg): string
+    function getTranslation(string|int $msg): string|int
     {
         return isset($this->messages[$msg])? ($this->messages[$msg][self::$messagesLanguage] ?? $this->messages[$msg][self::$messagesLanguage -1]): $msg;
     }
